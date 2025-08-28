@@ -60,4 +60,13 @@ contract BaseScaleValidationTest is Test {
         int24 actualTickMin = BaseScaleTickMath.getTickAtSqrtRatio(BaseScaleTickMath.MIN_SQRT_RATIO);
         assertEq(int256(expectedTickMin), int256(actualTickMin), "Mismatch at MIN_SQRT_RATIO");
     }
+
+    function test_getD() public {
+        uint256 d = BaseScaleTickMath.getD();
+        // d = (c - b) / a = (200020001 - 20001) / 200020000 = 200000000 / 200020000
+        // d = 1 / 1.0001
+        // d_scaled = (1 / 1.0001) * 1e18 = 999900009999000099
+        uint256 expectedD = 999900009999000099;
+        assertEq(d, expectedD, "d value mismatch");
+    }
 }

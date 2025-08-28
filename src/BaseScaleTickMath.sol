@@ -9,6 +9,10 @@ pragma solidity >=0.5.0;
 /// This computes sqrt price for ticks of size 1.0001, i.e. sqrt(1.0001^tick) as fixed point Q64.96 numbers.
 /// Supports prices between 2**-128 and 2**128
 library BaseScaleTickMath {
+    /// @dev The Pythagorean triple values used to derive d, where a^2 + b^2 = c^2
+    uint256 internal constant a = 200020000;
+    uint256 internal constant b = 20001;
+    uint256 internal constant c = 200020001;
     /// @dev The minimum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**-128
     int24 internal constant MIN_TICK = -887272;
     /// @dev The maximum tick that may be passed to #getSqrtRatioAtTick computed from log base 1.0001 of 2**128
@@ -18,6 +22,17 @@ library BaseScaleTickMath {
     uint160 internal constant MIN_SQRT_RATIO = 4295128739;
     /// @dev The maximum value that can be returned from #getSqrtRatioAtTick. Equivalent to getSqrtRatioAtTick(MAX_TICK)
     uint160 internal constant MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342;
+
+    /// @notice Calculates d = (c - b) / a using the library's constants, scaled for precision.
+    /// @return d A fixed-point representation of the calculated d value.
+    function getD() internal pure returns (uint256 d) {
+        // We scale by 10^18 to maintain precision for the fractional result.
+        uint256 precision = 1e18;
+        d = ((c - b) * precision) / a;
+        return d;
+    }
+
+
 
     /// @notice Calculates sqrt(price) * 2^96 where price = (1/d)^tick and d = 1/1.0001.
     /// This is equivalent to calculating sqrt(1.0001^tick) * 2^96.
