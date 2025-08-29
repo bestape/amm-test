@@ -2,6 +2,8 @@
 
 ## Vision
 
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/a6714919-6bdd-46e0-b2a5-2be13fd8eee2" /><br />
+
 OrbSwap.org is a research project dedicated to building a new generation of automated market makers (AMMs). Our goal is to move beyond the fixed-curve models of today and create a more flexible, generalized system that allows for the creation of liquidity pools with custom, mathematically-derived properties.
 
 This document outlines our progress to date and the next steps in our roadmap.
