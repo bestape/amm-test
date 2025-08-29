@@ -16,6 +16,8 @@ The first phase of our research was to establish a solid mathematical foundation
 
 ### 1. Deconstructing Uniswap V3 with Base Scale Calculus
 
+<img width="16732" height="16732" alt="artizan_6" src="https://github.com/user-attachments/assets/7b81e338-51a7-419e-ae39-d031632fa9b4" /><br />
+
 We began by proving that the pricing mechanism at the heart of Uniswap V3, the `TickMath` library, is a specific instance of a more general theory called **Base Scale Calculus**.
 
 *   **The Theory**: Base Scale Calculus defines the price-tick relationship through the formula `d = (c - b) / a`, where `a`, `b`, and `c` are the sides of a Pythagorean triple. The price is then a function of `(1/d)^tick`.
