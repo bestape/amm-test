@@ -22,6 +22,8 @@ We began by proving that the pricing mechanism at the heart of Uniswap V3, the `
 
 ### 2. The Generative Method: "Metallic Fibonacci" Sequences
 
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/8347d5f8-bd1c-4022-9931-688085e1609c" /><br />
+
 Uniswap's `TickMath` relies on a set of hard-coded, pre-calculated constants. This is efficient, but not flexible. Our goal is to generate these constants on-chain from a simple, elegant recurrence relation.
 
 *   **The Method**: We have implemented a proof-of-concept for this generative method in the `MetallicSequenceTest.sol` contract.
