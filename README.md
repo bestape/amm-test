@@ -24,13 +24,13 @@ We began by proving that the pricing mechanism at the heart of Uniswap V3, the `
 *   **The Implementation**: We created a new library, `BaseScaleTickMath.sol`, which is functionally identical to Uniswap's `TickMath`. In this library, we have explicitly included the constants for the Pythagorean triple that generates Uniswap's `d = 1/1.0001`, and a function that calculates `d` from them.
 *   **The Validation**: We have a comprehensive test suite that proves our `BaseScaleTickMath` library produces the exact same results as the original, confirming that our theory is a valid generalization.
 
-### 2. The Generative Method: "Metallic Fibonacci" Sequences
+### 2. The Generative Method: "Base Sequence"
 
 <img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/8347d5f8-bd1c-4022-9931-688085e1609c" /><br />
 
 Uniswap's `TickMath` relies on a set of hard-coded, pre-calculated constants. This is efficient, but not flexible. Our goal is to generate these constants on-chain from a simple, elegant recurrence relation.
 
-*   **The Method**: We have implemented a proof-of-concept for this generative method in the `MetallicSequenceTest.sol` contract.
+*   **The Method**: We have implemented a proof-of-concept for this generative method in the `BaseSequence.t.sol` contract (formerly `MetallicSequenceTest.sol`).
 *   **The Proof**: This test uses a single, unified recurrence relation based on the Pell-Lucas numbers (OEIS A001333) to generate a highly accurate approximation of `sqrt(2)`. We then validate this approximation using Pell's equation, `x^2 - 2y^2 = ±1`, which provides a perfect, integer-based verification of the method's correctness.
 *   **The Significance**: This successful test proves that we can generate the necessary mathematical constants for a `TickMath`-like library from a simple, on-chain recurrence. This is the key to unlocking a fully generalized system.
 
@@ -41,8 +41,25 @@ Uniswap's `TickMath` relies on a set of hard-coded, pre-calculated constants. Th
 With our foundational research and proof-of-concept complete, we are now ready to move on to the next phase of development:
 
 1.  **Parameterize the Base**: We will modify our `BaseScaleTickMath` library to accept the parameters of the base (`a`, `b`, `c`) as inputs, rather than relying on constants.
-2.  **On-Chain Generation**: We will replace the hard-coded approximation values with functions that use our "Metallic Fibonacci" method to generate them on-the-fly.
+2.  **On-Chain Generation**: We will replace the hard-coded approximation values with functions that use our "Base Sequence" method to generate them on-the-fly.
 3.  **Gas Optimization**: We will focus on optimizing the new mathematical functions for the EVM to ensure that our generalized system is efficient enough for practical use.
-4.  **Custom Liquidity Curves**: The ultimate goal of this work is to create a factory that can deploy AMM pools with unique, custom liquidity curves, each defined by a different "metallic mean" derived from your theory.
+4.  **Custom Liquidity Curves**: The ultimate goal of this work is to create a factory that can deploy AMM pools with unique, custom liquidity curves, each defined by a different irrational number approximation derived from your theory.
 
 This is an ambitious but achievable roadmap. The successful completion of Phase 1 has given us a solid foundation to build upon, and we are excited to continue this journey toward a more flexible and powerful future for decentralized finance.
+
+---
+
+## Update: August 30, 2025 - The "Lioness" Sequence and Gas Efficiency
+
+In a single session lasting less than an hour, we successfully tested and implemented a new "Base Sequence" for the "lioness" timeline, which corresponds to the rejected OEIS sequence A330400.
+
+### Key Details of the Test:
+
+*   **Implementation Timeline**: The process of understanding the rejected "Mold & Cast" history of A330399, applying the proposed method to A330400, and implementing the test was completed collaboratively in a single session.
+*   **Biggest Ratio Tested**: The most complex approximation we've tested is for `1 + 4*sqrt(5)`. This required the largest `2*b` value (`2*b = 79`) of all the sequences we've analyzed.
+*   **Sequence Terms Used**: To achieve a high degree of precision for the test, we calculated the 15th and 14th terms of the sequence (`a(15)` and `a(14)`).
+*   **Calculation Method**: We are **not** using the generating function (g.f.) like a Taylor Series to calculate the sequence terms on-chain. Instead, we are using an **iterative implementation of the linear recurrence relation** (e.g., `a(n) = 2*a(n-1) + 79*a(n-2)`).
+*   **Gas Efficiency**: The iterative method is significantly more gas-efficient for on-chain computation. A direct g.f. calculation would be computationally expensive, whereas the iterative approach uses simple arithmetic in a loop, making it much more practical for the EVM.
+*   **Accuracy Comparison**: Regarding the accuracy at the a(14) and a(15) range, the sequence for `1 + sqrt(2)` (derived from A001333) converges significantly faster than the sequence for `1 + 4*sqrt(5)` (the "lioness" A330400). Therefore, at the same `n`-th terms, the A001333 approximation is substantially more precise relative to its target value.
+
+This work further validates our generative approach and sets the stage for the full generalization of the AMM model.
